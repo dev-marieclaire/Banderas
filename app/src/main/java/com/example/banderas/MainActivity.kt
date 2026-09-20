@@ -34,33 +34,29 @@ class MainActivity : ComponentActivity() {
         setContent {
             BanderasTheme {
                 Scaffold(modifier = Modifier.fillMaxSize())
-                { innerPadding -> BanderaMexico(innerPadding) }
+                { innerPadding -> BanderaFrancia(innerPadding) }
             }
         }
     }
 }
 
 @Composable
-fun BanderaMexico(innerPadding: PaddingValues = PaddingValues.Zero, modifier: Modifier = Modifier)
+fun BanderaFrancia(innerPadding: PaddingValues = PaddingValues.Zero, modifier: Modifier = Modifier)
 {
     Row(modifier = Modifier.padding(innerPadding).fillMaxSize())
     {
         Box(modifier = Modifier
             .weight(1f)
             .fillMaxHeight()
-            .background(Color(0xFF006341)))
+            .background(Color(0xFF0055A4)))
         Box(modifier = Modifier
             .weight(1f)
             .fillMaxHeight()
-            .background(Color.White)
-            , contentAlignment = Alignment.Center)
-        {
-            Image(
-                painter = painterResource(id = R.drawable.escudo),
-                contentDescription = null
-            )
-        }
-        Box(modifier = Modifier.fillMaxHeight().weight(1f).background(Color.Red)) {}
+            .background(Color.White))
+        Box(modifier = Modifier
+            .weight(1f)
+            .fillMaxHeight()
+            .background(Color(0xFFEF4135)))
     }
 }
 
@@ -68,6 +64,6 @@ fun BanderaMexico(innerPadding: PaddingValues = PaddingValues.Zero, modifier: Mo
 @Composable
 fun GreetingPreview() {
     BanderasTheme {
-        BanderaMexico()
+        BanderaFrancia()
     }
 }

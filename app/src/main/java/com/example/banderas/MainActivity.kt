@@ -38,9 +38,9 @@ fun BanderaEspana(modifier: Modifier = Modifier)
 {
     Column(modifier = modifier.fillMaxSize())
     {
-        Box(Modifier.weight(1f).fillMaxWidth().background(Color(0xFFAA151B)))
-        Box(Modifier.weight(2f).fillMaxWidth().background(Color(0xFFF1BF00)))
-        Box(Modifier.weight(1f).fillMaxWidth().background(Color(0xFFAA151B)))
+        Box(Modifier.weight(2f).fillMaxWidth().background(Color(0xFFFFCD00)))
+        Box(Modifier.weight(1f).fillMaxWidth().background(Color(0xFF003087)))
+        Box(Modifier.weight(1f).fillMaxWidth().background(Color(0xFFC8102E)))
     }
 }
 

@@ -12,12 +12,17 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.example.banderas.ui.theme.BanderasTheme
 
 class MainActivity : ComponentActivity() {
@@ -27,27 +32,37 @@ class MainActivity : ComponentActivity() {
         setContent {
             BanderasTheme {
                 Scaffold(modifier = Modifier.fillMaxSize())
-                { innerPadding -> BanderaEspana(Modifier.padding(innerPadding)) }
+                { innerPadding -> BanderaArgentina(Modifier.padding(innerPadding)) }
             }
         }
     }
 }
 
 @Composable
-fun BanderaEspana(modifier: Modifier = Modifier)
+fun BanderaArgentina(modifier: Modifier = Modifier)
 {
-    Column(modifier = modifier.fillMaxSize())
+    Box(modifier = modifier.fillMaxSize())
     {
-        Box(Modifier.weight(1f).fillMaxWidth().background(Color(0xFFAA151B)))
-        Box(Modifier.weight(2f).fillMaxWidth().background(Color(0xFFF1BF00)))
-        Box(Modifier.weight(1f).fillMaxWidth().background(Color(0xFFAA151B)))
+        Column(Modifier.fillMaxSize())
+        {
+            Box(Modifier.weight(1f).fillMaxWidth().background(Color(0xFF74ACDF)))
+            Box(Modifier.weight(1f).fillMaxWidth().background(Color(0xFFFFFFFF)))
+            Box(Modifier.weight(1f).fillMaxWidth().background(Color(0xFF74ACDF)))
+        }
+        Box(
+            modifier = Modifier
+                .align(Alignment.Center)
+                .size(50.dp)
+                .clip(CircleShape)
+                .background(Color(0xFFF6B40E))
+        )
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun BanderaEspanaPreview() {
+fun BanderaArgentinaPreview() {
     Surface {
-        BanderaEspana(modifier = Modifier.fillMaxSize())
+        BanderaArgentina(modifier = Modifier.fillMaxSize())
     }
 }

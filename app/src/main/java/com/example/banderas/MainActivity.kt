@@ -6,9 +6,11 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -25,36 +27,27 @@ class MainActivity : ComponentActivity() {
         setContent {
             BanderasTheme {
                 Scaffold(modifier = Modifier.fillMaxSize())
-                { innerPadding -> BanderaAlemania(Modifier.padding(innerPadding)) }
+                { innerPadding -> BanderaEspana(Modifier.padding(innerPadding)) }
             }
         }
     }
 }
 
 @Composable
-fun BanderaAlemania(modifier: Modifier = Modifier)
+fun BanderaEspana(modifier: Modifier = Modifier)
 {
-    Row(modifier = Modifier.fillMaxSize())
+    Column(modifier = modifier.fillMaxSize())
     {
-        Box(modifier = Modifier
-            .weight(1f)
-            .fillMaxHeight()
-            .background(Color.Black))
-        Box(modifier = Modifier
-            .weight(1f)
-            .fillMaxHeight()
-            .background(Color(0xFFDD0000)))
-        Box(modifier = Modifier
-            .weight(1f)
-            .fillMaxHeight()
-            .background(Color(0xFFFFCE00)))
+        Box(Modifier.weight(1f).fillMaxWidth().background(Color(0xFFAA151B)))
+        Box(Modifier.weight(2f).fillMaxWidth().background(Color(0xFFF1BF00)))
+        Box(Modifier.weight(1f).fillMaxWidth().background(Color(0xFFAA151B)))
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun BanderaAlemaniaPreview() {
+fun BanderaEspanaPreview() {
     Surface {
-        BanderaAlemania(modifier = Modifier.fillMaxSize())
+        BanderaEspana(modifier = Modifier.fillMaxSize())
     }
 }

@@ -39,7 +39,7 @@ fun BanderaFrancia(modifier: Modifier = Modifier)
         Box(modifier = Modifier
             .weight(1f)
             .fillMaxHeight()
-            .background(Color(0xFF0055A4)))
+            .background(Color(0xFF009246)))
         Box(modifier = Modifier
             .weight(1f)
             .fillMaxHeight()
@@ -47,7 +47,7 @@ fun BanderaFrancia(modifier: Modifier = Modifier)
         Box(modifier = Modifier
             .weight(1f)
             .fillMaxHeight()
-            .background(Color(0xFFEF4135)))
+            .background(Color(0xFFCE2B37)))
     }
 }
 

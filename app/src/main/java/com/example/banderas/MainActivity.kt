@@ -91,7 +91,7 @@ fun BanderaEEUU(modifier: Modifier = Modifier)
             {   index ->
                 Row(Modifier.fillMaxWidth().padding(5.dp), horizontalArrangement = Arrangement.Center)
                 {
-                    repeat(if (index % 2 == 0) 5 else 6)
+                    repeat(if (index % 2 == 0) 6 else 5)
                     {
                         Box(
                             modifier = Modifier

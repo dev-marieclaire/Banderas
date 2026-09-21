@@ -25,36 +25,36 @@ class MainActivity : ComponentActivity() {
         setContent {
             BanderasTheme {
                 Scaffold(modifier = Modifier.fillMaxSize())
-                { innerPadding -> BanderaFrancia(Modifier.padding(innerPadding)) }
+                { innerPadding -> BanderaAlemania(Modifier.padding(innerPadding)) }
             }
         }
     }
 }
 
 @Composable
-fun BanderaFrancia(modifier: Modifier = Modifier)
+fun BanderaAlemania(modifier: Modifier = Modifier)
 {
     Row(modifier = Modifier.fillMaxSize())
     {
         Box(modifier = Modifier
             .weight(1f)
             .fillMaxHeight()
-            .background(Color(0xFF009246)))
+            .background(Color.Black))
         Box(modifier = Modifier
             .weight(1f)
             .fillMaxHeight()
-            .background(Color.White))
+            .background(Color(0xFFDD0000)))
         Box(modifier = Modifier
             .weight(1f)
             .fillMaxHeight()
-            .background(Color(0xFFCE2B37)))
+            .background(Color(0xFFFFCE00)))
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun BanderaFranciaPreview() {
+fun BanderaAlemaniaPreview() {
     Surface {
-        BanderaFrancia(modifier = Modifier.fillMaxSize())
+        BanderaAlemania(modifier = Modifier.fillMaxSize())
     }
 }

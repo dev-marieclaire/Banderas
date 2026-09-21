@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.GenericShape
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -32,37 +33,45 @@ class MainActivity : ComponentActivity() {
         setContent {
             BanderasTheme {
                 Scaffold(modifier = Modifier.fillMaxSize())
-                { innerPadding -> BanderaArgentina(Modifier.padding(innerPadding)) }
+                { innerPadding -> BanderaBrasil(Modifier.padding(innerPadding)) }
             }
         }
     }
 }
 
+val RomboShape = GenericShape { size, _ ->
+    moveTo(size.width / 2f, 0f)
+    lineTo(size.width, size.height / 2f)
+    lineTo(size.width / 2f, size.height)
+    lineTo(0f, size.height / 2f)
+    close()
+}
+
 @Composable
-fun BanderaArgentina(modifier: Modifier = Modifier)
+fun BanderaBrasil(modifier: Modifier = Modifier)
 {
-    Box(modifier = modifier.fillMaxSize())
+    Box(modifier = modifier.fillMaxSize().background(Color(0xFF009B3A)),
+        contentAlignment = Alignment.Center)
     {
-        Column(Modifier.fillMaxSize())
-        {
-            Box(Modifier.weight(1f).fillMaxWidth().background(Color(0xFF74ACDF)))
-            Box(Modifier.weight(1f).fillMaxWidth().background(Color(0xFFFFFFFF)))
-            Box(Modifier.weight(1f).fillMaxWidth().background(Color(0xFF74ACDF)))
-        }
+        Box(modifier = Modifier
+            .fillMaxSize()
+            .clip(RomboShape)
+            .background(Color(0xFFFEDF00))
+        )
         Box(
             modifier = Modifier
                 .align(Alignment.Center)
-                .size(50.dp)
+                .size(90.dp)
                 .clip(CircleShape)
-                .background(Color(0xFFF6B40E))
+                .background(Color(0xFF002776))
         )
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun BanderaArgentinaPreview() {
+fun BanderaBrasilPreview() {
     Surface {
-        BanderaArgentina(modifier = Modifier.fillMaxSize())
+        BanderaBrasil(modifier = Modifier.fillMaxSize())
     }
 }

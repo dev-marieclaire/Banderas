@@ -39,31 +39,16 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-val RomboShape = GenericShape { size, _ ->
-    moveTo(size.width / 2f, 0f)
-    lineTo(size.width, size.height / 2f)
-    lineTo(size.width / 2f, size.height)
-    lineTo(0f, size.height / 2f)
-    close()
-}
-
 @Composable
 fun BanderaBrasil(modifier: Modifier = Modifier)
 {
-    Box(modifier = modifier.fillMaxSize().background(Color(0xFF009B3A)),
+    Box(modifier = modifier.fillMaxSize().background(Color(0xFFFFFFFF)),
         contentAlignment = Alignment.Center)
     {
         Box(modifier = Modifier
-            .fillMaxSize()
-            .clip(RomboShape)
-            .background(Color(0xFFFEDF00))
-        )
-        Box(
-            modifier = Modifier
-                .align(Alignment.Center)
-                .size(90.dp)
-                .clip(CircleShape)
-                .background(Color(0xFF002776))
+            .size(128.dp)
+            .clip(CircleShape)
+            .background(Color(0xFFFF0000))
         )
     }
 }

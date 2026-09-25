@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.banderas.ui.theme.BanderasTheme
@@ -50,20 +51,20 @@ val RomboShape = GenericShape { size, _ ->
 @Composable
 fun BanderaBrasil(modifier: Modifier = Modifier)
 {
-    Box(modifier = modifier.fillMaxSize().background(Color(0xFF009B3A)),
+    Box(modifier = modifier.fillMaxSize().background(colorResource(R.color.GreenBrazil)),
         contentAlignment = Alignment.Center)
     {
         Box(modifier = Modifier
             .fillMaxSize()
             .clip(RomboShape)
-            .background(Color(0xFFFEDF00))
+            .background(colorResource(R.color.YellowBrazil))
         )
         Box(
             modifier = Modifier
                 .align(Alignment.Center)
                 .size(90.dp)
                 .clip(CircleShape)
-                .background(Color(0xFF002776))
+                .background(colorResource(R.color.BlueBrazil))
         )
     }
 }

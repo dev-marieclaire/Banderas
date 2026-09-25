@@ -15,6 +15,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.banderas.ui.theme.BanderasTheme
 
@@ -43,11 +44,11 @@ fun BanderaAlemania(modifier: Modifier = Modifier)
         Box(modifier = Modifier
             .weight(1f)
             .fillMaxHeight()
-            .background(Color(0xFFDD0000)))
+            .background(colorResource(R.color.RedGermany)))
         Box(modifier = Modifier
             .weight(1f)
             .fillMaxHeight()
-            .background(Color(0xFFFFCE00)))
+            .background(colorResource(R.color.YellowGermany)))
     }
 }
 

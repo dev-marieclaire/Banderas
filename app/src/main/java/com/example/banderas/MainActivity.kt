@@ -24,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.banderas.StarShape
@@ -72,14 +73,14 @@ fun BanderaChile(modifier: Modifier = Modifier)
             Box(Modifier
                 .weight(1f)
                 .fillMaxHeight()
-                .background(Color(0xFF0039A6)),
+                .background(colorResource(R.color.BlueChile)),
                 contentAlignment = Alignment.Center
             )
             {
                 Box(Modifier
                     .clip(StarShape)
                     .size(128.dp)
-                    .background(Color(0xFFFFFFFF))
+                    .background(Color.White)
                 )
             }
             Box(Modifier
@@ -91,7 +92,7 @@ fun BanderaChile(modifier: Modifier = Modifier)
         Box(Modifier
             .weight(1f)
             .fillMaxWidth()
-            .background(Color(0xFFd52b1e))
+            .background(colorResource(R.color.RedChile))
         )
     }
 }

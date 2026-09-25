@@ -15,6 +15,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.banderas.ui.theme.BanderasTheme
 
@@ -39,7 +40,7 @@ fun BanderaFrancia(modifier: Modifier = Modifier)
         Box(modifier = Modifier
             .weight(1f)
             .fillMaxHeight()
-            .background(Color(0xFF009246)))
+            .background(colorResource(R.color.GreenItaly)))
         Box(modifier = Modifier
             .weight(1f)
             .fillMaxHeight()
@@ -47,7 +48,7 @@ fun BanderaFrancia(modifier: Modifier = Modifier)
         Box(modifier = Modifier
             .weight(1f)
             .fillMaxHeight()
-            .background(Color(0xFFCE2B37)))
+            .background(colorResource(R.color.RedItaly)))
     }
 }
 

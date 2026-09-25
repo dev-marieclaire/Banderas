@@ -42,13 +42,13 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun BanderaJapon(modifier: Modifier = Modifier)
 {
-    Box(modifier = modifier.fillMaxSize().background(Color(0xFFFFFFFF)),
+    Box(modifier = modifier.fillMaxSize().background(Color.White),
         contentAlignment = Alignment.Center)
     {
         Box(modifier = Modifier
             .size(128.dp)
             .clip(CircleShape)
-            .background(Color(0xFFFF0000))
+            .background(Color.Red)
         )
     }
 }

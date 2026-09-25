@@ -30,31 +30,3 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
-@Composable
-fun BanderaFrancia(modifier: Modifier = Modifier)
-{
-    Row(modifier = Modifier.fillMaxSize())
-    {
-        Box(modifier = Modifier
-            .weight(1f)
-            .fillMaxHeight()
-            .background(Color(0xFF0055A4)))
-        Box(modifier = Modifier
-            .weight(1f)
-            .fillMaxHeight()
-            .background(Color.White))
-        Box(modifier = Modifier
-            .weight(1f)
-            .fillMaxHeight()
-            .background(Color(0xFFEF4135)))
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun BanderaFranciaPreview() {
-    Surface {
-        BanderaFrancia(modifier = Modifier.fillMaxSize())
-    }
-}

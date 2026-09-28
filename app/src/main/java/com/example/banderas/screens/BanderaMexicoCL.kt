@@ -11,7 +11,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
@@ -26,7 +25,7 @@ fun BanderaScreen(modifier: Modifier = Modifier)
         val guideline1 = createGuidelineFromTop(1/3f);
         val guideline2 = createGuidelineFromTop(2/3f);
 
-        Box(modifier = Modifier.background(Color.Red).constrainAs(c1)
+        Box(modifier = Modifier.background(colorResource(R.color.RedMexico)).constrainAs(c1)
         {
             top.linkTo(parent.top)
             bottom.linkTo(guideline1)
@@ -37,8 +36,6 @@ fun BanderaScreen(modifier: Modifier = Modifier)
             width = Dimension.fillToConstraints
             height = Dimension.fillToConstraints
         })
-        {
-        }
         ConstraintLayout (modifier = Modifier.background(Color.White).constrainAs(c2)
         {
             top.linkTo(guideline1)
@@ -83,8 +80,6 @@ fun BanderaScreen(modifier: Modifier = Modifier)
             width = Dimension.fillToConstraints
             height = Dimension.fillToConstraints
         })
-        {
-        }
     }
 }
 

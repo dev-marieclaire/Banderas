@@ -24,6 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.banderas.Screens.BanderaScreen
 import com.example.banderas.ui.theme.BanderasTheme
 
 class MainActivity : ComponentActivity() {
@@ -33,37 +34,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             BanderasTheme {
                 Scaffold(modifier = Modifier.fillMaxSize())
-                { innerPadding -> BanderaArgentina(Modifier.padding(innerPadding)) }
+                { innerPadding -> BanderaScreen(Modifier.padding(innerPadding)) }
             }
         }
-    }
-}
-
-@Composable
-fun BanderaArgentina(modifier: Modifier = Modifier)
-{
-    Box(modifier = modifier.fillMaxSize())
-    {
-        Column(Modifier.fillMaxSize())
-        {
-            Box(Modifier.weight(1f).fillMaxWidth().background(colorResource(R.color.BlueArg)))
-            Box(Modifier.weight(1f).fillMaxWidth().background(Color.White))
-            Box(Modifier.weight(1f).fillMaxWidth().background(colorResource(R.color.BlueArg)))
-        }
-        Box(
-            modifier = Modifier
-                .align(Alignment.Center)
-                .size(50.dp)
-                .clip(CircleShape)
-                .background(colorResource(R.color.GoldArg))
-        )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun BanderaArgentinaPreview() {
-    Surface {
-        BanderaArgentina(modifier = Modifier.fillMaxSize())
     }
 }

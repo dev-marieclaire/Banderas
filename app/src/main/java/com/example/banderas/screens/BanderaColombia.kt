@@ -15,17 +15,18 @@ import androidx.constraintlayout.compose.Dimension
 import com.example.banderas.R
 
 @Composable
-fun BanderaAlemaniaCL(modifier: Modifier = Modifier) {
+fun BanderaScreen(modifier: Modifier = Modifier) {
     ConstraintLayout(modifier = modifier.fillMaxSize()) {
         val blue  = createRef()
         val white = createRef()
         val red   = createRef()
 
-        val topGuide   = createGuidelineFromTop(1f / 3f)
-        val bottomGuide  = createGuidelineFromTop(2f / 3f)
+        val leftGuide   = createGuidelineFromStart(1f / 3f)
+        val rightGuide  = createGuidelineFromStart(2f / 3f)
 
         val fill = Dimension.fillToConstraints
 
+        // shared vertical constraints, extended per stripe horizontally
         fun ConstrainScope.fullHeight() {
             top.linkTo(parent.top)
             bottom.linkTo(parent.bottom)
@@ -34,32 +35,32 @@ fun BanderaAlemaniaCL(modifier: Modifier = Modifier) {
 
         Box(Modifier.constrainAs(blue) {
             fullHeight()
-            top.linkTo(parent.top)
-            bottom.linkTo(topGuide)
+            start.linkTo(parent.start)
+            end.linkTo(leftGuide)
             width = fill
-        }.background(Color.Black))
+        }.background(colorResource(R.color.YellowCol)))
 
         Box(Modifier.constrainAs(white) {
             fullHeight()
-            top.linkTo(topGuide)
-            bottom.linkTo(bottomGuide)
+            start.linkTo(leftGuide)
+            end.linkTo(rightGuide)
             width = fill
-        }.background(colorResource(R.color.RedGermany)))
+        }.background(colorResource(R.color.BlueCol)))
 
         Box(Modifier.constrainAs(red) {
             fullHeight()
-            top.linkTo(bottomGuide)
-            bottom.linkTo(parent.bottom)
+            start.linkTo(rightGuide)
+            end.linkTo(parent.end)
             width = fill
-        }.background(colorResource(R.color.YellowGermany)))
+        }.background(colorResource(R.color.RedCol)))
     }
 }
 
 @Preview ()
 @Composable
-fun BanderaAlemaniaCLPreview()
+fun BanderaScreenPreview()
 {
     Surface {
-        BanderaFranciaCL(modifier = Modifier.fillMaxSize())
+        BanderaScreen(modifier = Modifier.fillMaxSize())
     }
 }

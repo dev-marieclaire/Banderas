@@ -24,6 +24,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.banderas.Screens.BanderaScreen
 import com.example.banderas.ui.theme.BanderasTheme
 
 class MainActivity : ComponentActivity() {
@@ -33,30 +34,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             BanderasTheme {
                 Scaffold(modifier = Modifier.fillMaxSize())
-                { innerPadding -> BanderaJapon(Modifier.padding(innerPadding)) }
+                { innerPadding -> BanderaScreen(Modifier.padding(innerPadding)) }
             }
         }
-    }
-}
-
-@Composable
-fun BanderaJapon(modifier: Modifier = Modifier)
-{
-    Box(modifier = modifier.fillMaxSize().background(Color.White),
-        contentAlignment = Alignment.Center)
-    {
-        Box(modifier = Modifier
-            .size(128.dp)
-            .clip(CircleShape)
-            .background(Color.Red)
-        )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun BanderaJaponPreview() {
-    Surface {
-        BanderaJapon(modifier = Modifier.fillMaxSize())
     }
 }

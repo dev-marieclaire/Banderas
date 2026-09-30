@@ -26,14 +26,14 @@ class MainActivity : ComponentActivity() {
         setContent {
             BanderasTheme {
                 Scaffold(modifier = Modifier.fillMaxSize())
-                { innerPadding -> BanderaAlemania(Modifier.padding(innerPadding)) }
+                { innerPadding -> BanderaScreen(Modifier.padding(innerPadding)) }
             }
         }
     }
 }
 
 @Composable
-fun BanderaAlemania(modifier: Modifier = Modifier)
+fun BanderaScreen(modifier: Modifier = Modifier)
 {
     Row(modifier = Modifier.fillMaxSize())
     {
@@ -54,8 +54,8 @@ fun BanderaAlemania(modifier: Modifier = Modifier)
 
 @Preview(showBackground = true)
 @Composable
-fun BanderaAlemaniaPreview() {
+fun BanderaScreenPreview() {
     Surface {
-        BanderaAlemania(modifier = Modifier.fillMaxSize())
+        BanderaScreen(modifier = Modifier.fillMaxSize())
     }
 }

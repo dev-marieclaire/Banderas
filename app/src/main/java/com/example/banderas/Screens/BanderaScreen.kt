@@ -45,14 +45,14 @@ fun BanderaScreen(modifier: Modifier = Modifier) {
             start.linkTo(leftGuide)
             end.linkTo(rightGuide)
             width = fill
-        }.background(colorResource(R.color.YellowGermany)))
+        }.background(colorResource(R.color.RedGermany)))
 
         Box(Modifier.constrainAs(red) {
             fullHeight()
             start.linkTo(rightGuide)
             end.linkTo(parent.end)
             width = fill
-        }.background(colorResource(R.color.RedGermany)))
+        }.background(colorResource(R.color.YellowGermany)))
     }
 }
 

@@ -1,5 +1,6 @@
 package com.example.banderas.Screens
 
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -48,66 +49,23 @@ val StarShape = GenericShape { size, _ ->
 @Composable
 fun BanderaScreen(modifier: Modifier = Modifier)
 {
-    ConstraintLayout(modifier = modifier)
+    Box(modifier = modifier
+        .aspectRatio(1f)
+        .background(colorResource(R.color.RedSweeden))
+    )
     {
-        val (c1, c2, c3, star) = createRefs();
-
-        val vmiddle = createGuidelineFromTop(0.5f);
-        val quarter = createGuidelineFromStart(1/3f);
-
-        ConstraintLayout (modifier = Modifier
-            .background(colorResource(R.color.BlueChile))
-            .constrainAs(c1)
-            {
-                top.linkTo(parent.top)
-                bottom.linkTo(vmiddle)
-
-                start.linkTo(parent.start)
-                end.linkTo(quarter)
-
-                width = Dimension.fillToConstraints
-                height = Dimension.fillToConstraints
-            })
-        {
-            ConstraintLayout (modifier = Modifier
-                .clip(StarShape)
-                .size(96.dp)
-                .background(Color.White)
-                .constrainAs(star)
-                {
-                    top.linkTo(parent.top)
-                    bottom.linkTo(parent.bottom)
-
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                }
-            )
-            {}
-        }
-        Box(modifier = Modifier
+        Box(Modifier
+            .align(Alignment.Center)
+            .fillMaxWidth(0.2f)
+            .fillMaxHeight(0.62f)
             .background(Color.White)
-            .constrainAs(c2)
-            {
-                top.linkTo(parent.top)
-                bottom.linkTo(vmiddle)
-
-                start.linkTo(c1.end)
-                end.linkTo(parent.end)
-            }) {}
-        Box(modifier = Modifier
-            .background(colorResource(R.color.RedChile))
-            .constrainAs(c3)
-            {
-                top.linkTo(vmiddle)
-                bottom.linkTo(parent.bottom)
-
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-
-                width = Dimension.fillToConstraints
-                height = Dimension.fillToConstraints
-            }
-        ) {}
+        )
+        Box(Modifier
+            .align(Alignment.Center)
+            .fillMaxWidth(0.62f)
+            .fillMaxHeight(0.2f)
+            .background(Color.White)
+        )
     }
 }
 

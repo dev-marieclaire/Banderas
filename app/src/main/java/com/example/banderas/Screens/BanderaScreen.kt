@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.res.colorResource
@@ -78,30 +79,32 @@ val StarShape = GenericShape { size, _ ->
 @Composable
 fun BanderaScreen(modifier: Modifier = Modifier)
 {
-    Box(modifier = modifier
-        .aspectRatio(1f)
-        .background(colorResource(R.color.RedSweeden))
-    )
+    val redTurkey = colorResource(R.color.RedTurkey);
+
+    Canvas(modifier = modifier.fillMaxSize())
     {
-        Box(Modifier
-            .align(Alignment.Center)
-            .fillMaxWidth(0.2f)
-            .fillMaxHeight(0.62f)
-            .background(Color.White)
+        drawRect(color = redTurkey);
+
+        val cy = size.height / 2f
+        val rOut = size.height * 0.30f
+        drawCircle(
+            color = Color.White, radius = rOut,
+            center = Offset(size.width * 0.38f, cy)
         )
-        Box(Modifier
-            .align(Alignment.Center)
-            .fillMaxWidth(0.62f)
-            .fillMaxHeight(0.2f)
-            .background(Color.White)
+
+        drawCircle(
+            color = Color(0xFFE30A17), radius = size.height * 0.24f,
+            center = Offset(size.width * 0.38f + size.height * 0.09f, cy)
         )
+
+        val star = starPath(size.width * 5 / 8f, size.height / 2f, 96f);
+        drawPath(star, color = Color.White);
     }
 }
-
 @Preview(showBackground = true)
 @Composable
 fun BanderaScreenPreview() {
     Surface {
-        BanderaScreen(modifier = Modifier.fillMaxSize())
+        BanderaScreen(modifier = Modifier.aspectRatio(4 / 3f))
     }
 }

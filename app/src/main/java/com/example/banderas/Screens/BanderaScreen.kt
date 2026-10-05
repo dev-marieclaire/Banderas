@@ -12,6 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PaintingStyle.Companion.Stroke
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.banderas.R
@@ -20,72 +21,61 @@ import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 
-fun starPath(
-    posX: Float,
-    posY: Float,
-    radius: Float,
-    rotation: Float = 0f
-): Path {
-    val path = Path()
-
-    val points = 5
-    val stepDeg = 360f / (points * 2)   // 36°
-    val innerRadius = radius / 2.5f     // tweak this ratio to taste
-
-    for (i in 0 until points * 2) {     // 10 vertices
-        val angleDeg = rotation - 90 + i * stepDeg
-        val angleRad = angleDeg * (PI / 180.0)
-
-        val r = if (i % 2 == 0) radius else innerRadius
-
-        val x = posX + r * cos(angleRad).toFloat()
-        val y = posY + r * sin(angleRad).toFloat()
-
-        if (i == 0) path.moveTo(x, y)
-        else path.lineTo(x, y)
-    }
-
-    path.close()
-    return path
-}
-
 @Composable
-fun BanderaScreen(modifier: Modifier = Modifier)
-{
-    val blueCuba = colorResource(R.color.BlueCuba);
-    val redCuba = colorResource(R.color.RedCuba);
+fun BanderaScreen(modifier: Modifier = Modifier) {
+    val azul    = Color(0xFF002F6C)
+    val amarillo= Color(0xFFFED141)
+    val rojo    = Color(0xFFD92323)
+    val blanco  = Color.White
+    val verde   = Color(0xFF007A33)
 
-    Canvas(modifier = modifier.fillMaxSize())
-    {
-        val stripe = size.height / 5f;
+    Canvas(modifier = modifier.fillMaxSize()) {
+        val W = size.width
+        val H = size.height
+        val origin = Offset(0f, H)
 
-        for (i in 0 until 5)
-        {
-            if (i % 2 == 0)
-                drawRect(
-                    color = blueCuba,
-                    topLeft = Offset(0f, i * stripe),
-                    size = Size(size.width, stripe)
-                )
+        val colors = listOf(azul, amarillo, rojo, blanco, verde)
+        val angles = listOf(90f, 72f, 54f, 36f, 18f, 0f)  // 5 franjas = 6 bordes
 
+        // Punto donde el rayo desde `origin` a `angleDeg` corta el borde
+        // superior (y = 0) o derecho (x = W) del canvas.
+        fun hitPoint(angleDeg: Float): Offset {
+            val rad = angleDeg * (PI / 180.0)
+            val dx = cos(rad).toFloat()
+            val dy = -sin(rad).toFloat()   // negativo: y crece hacia abajo
+
+            // t para alcanzar y = 0 (borde superior)
+            val tTop   = if (dy < 0f) (0f - origin.y) / dy else Float.POSITIVE_INFINITY
+            // t para alcanzar x = W (borde derecho)
+            val tRight = if (dx > 0f) (W - origin.x) / dx else Float.POSITIVE_INFINITY
+
+            val t = minOf(tTop, tRight)
+            return Offset(origin.x + t * dx, origin.y + t * dy)
         }
 
-        val triWidth = size.width * 0.38f;
-        val trianglePath = Path().apply {
-            moveTo(0f, 0f);
-            lineTo(triWidth, size.height / 2f);
-            lineTo(0f, size.height);
-            close();
+        val hits = angles.map { hitPoint(it) }
+
+        for (i in colors.indices) {
+            val A = hits[i]
+            val B = hits[i + 1]
+
+            val path = Path().apply {
+                moveTo(origin.x, origin.y)
+                lineTo(A.x, A.y)
+
+                // Si A está en el borde superior y B en el derecho,
+                // hay que pasar por la esquina superior derecha.
+                val aOnTop   = A.y <= 0.001f
+                val bOnRight = B.x >= W - 0.001f
+                if (aOnTop && bOnRight) {
+                    lineTo(W, 0f)
+                }
+
+                lineTo(B.x, B.y)
+                close()
+            }
+            drawPath(path, colors[i])
         }
-        drawPath(trianglePath, redCuba)
-
-        val star = starPath(
-            size.width / 7f,
-            size.height / 2f,
-            radius = size.minDimension / 8f
-        )
-
-        drawPath(star, color = Color.White)
     }
 }
 

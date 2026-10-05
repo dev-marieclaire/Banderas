@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -28,6 +29,34 @@ import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 
+fun starPath(
+    posX: Float,
+    posY: Float,
+    radius: Float,
+    rotation: Float = 0f
+): Path {
+    val path = Path()
+
+    val points = 5
+    val stepDeg = 360f / (points * 2)   // 36°
+    val innerRadius = radius / 2.5f     // tweak this ratio to taste
+
+    for (i in 0 until points * 2) {     // 10 vertices
+        val angleDeg = rotation - 90 + i * stepDeg
+        val angleRad = angleDeg * (PI / 180.0)
+
+        val r = if (i % 2 == 0) radius else innerRadius
+
+        val x = posX + r * cos(angleRad).toFloat()
+        val y = posY + r * sin(angleRad).toFloat()
+
+        if (i == 0) path.moveTo(x, y)
+        else path.lineTo(x, y)
+    }
+
+    path.close()
+    return path
+}
 
 val StarShape = GenericShape { size, _ ->
     val cx = size.width / 2f

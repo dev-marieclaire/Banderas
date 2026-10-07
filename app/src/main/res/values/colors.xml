@@ -7,6 +7,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="BlueUK">#012169</color>
-    <color name="RedUK">#C8102E</color>
+    <color name="RedSA">#E03C31</color>
+    <color name="BlueSA">#002395</color>
+    <color name="GoldSA">#FFB612</color>
+    <color name="GreenSA">#007A4D</color>
 </resources>

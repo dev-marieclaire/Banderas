@@ -30,71 +30,50 @@ import kotlin.math.cos
 import kotlin.math.hypot
 import kotlin.math.sin
 
-fun drawEquitativeTriangle(base: Float, height: Float, position: Offset): Path
-{
-    val path = Path()
-
-    path.lineTo(position.x - (base / 2f), position.y)
-    path.lineTo(position.x + (base / 2f), position.y)
-    path.lineTo(base / 2f, position.y + height)
-    path.lineTo(position.x - (base / 2f), position.y)
-
-    path.close()
-    return path
-}
-
 @Composable
 fun BanderaScreen(modifier: Modifier = Modifier.fillMaxSize()) {
-    val black = Color.Black
     val white = Color.White
-    val gold = colorResource(R.color.GoldSA)
-    val red = colorResource(R.color.RedSA)
-    val green = colorResource(R.color.GreenSA)
-    val blue = colorResource(R.color.BlueSA)
+    val red = colorResource(R.color.RedNepal)
+    val blue = colorResource(R.color.BlueNepal)
 
     Canvas(modifier = modifier)
     {
-        drawRect(blue)
-        drawRect(red, Offset.Zero, Size(size.width, size.height / 2f))
-        drawRect(white, Offset(0f, size.height * 7 / 24f), Size(size.width, size.height * 5 / 12f))
+        drawRect(white)
 
-        val triWidth1 = size.width * 0.6f;
-        val trianglePath1 = Path().apply {
-            moveTo(0f, 0f - size.height * 0.25f);
-            lineTo(triWidth1, size.height / 2f);
-            lineTo(0f, size.height * 1.25f);
+        val triangle_path_top = Path().apply {
+            moveTo(0f, 0f);
+            lineTo(size.width / 2, size.height / 2);
+            lineTo(0f, size.height / 2);
             close();
         }
-        drawPath(trianglePath1, white)
+        drawPath(triangle_path_top, blue)
 
-        val triWidth2 = size.width * 0.6f;
-        val trianglePath2 = Path().apply {
-            moveTo(-size.width / 3, -size.height / 2f);
-            lineTo(triWidth2 - size.width / 12, size.height / 2f);
-            lineTo(-size.width / 3, size.height + size.width / 3);
+        val triangle_path_bottom = Path().apply {
+            moveTo(0f, size.height / 4);
+            lineTo(size.width / 2, size.height);
+            lineTo(0f, size.height);
             close();
         }
-        drawPath(trianglePath2, green)
+        drawPath(triangle_path_bottom, blue)
 
-        drawRect(green, Offset(0f, size.height * 9 / 24f), Size(size.width, size.height * 3 / 12f))
-
-        val triWidth3 = size.width * 0.7f;
-        val trianglePath3 = Path().apply {
-            moveTo(0f, size.height * 1 / 8);
-            lineTo(triWidth3 / 2, size.height / 2f);
-            lineTo(0f, size.height * 7 / 8);
+        val inner_triangle_path_top = Path().apply {
+            moveTo(20f, 40f);
+            lineTo(size.width / 2 - 60, size.height / 2 - 20);
+            lineTo(20f, size.height / 2 - 20);
             close();
         }
-        drawPath(trianglePath3, gold)
+        drawPath(inner_triangle_path_top, red)
 
-        val triWidth4 = size.width * 0.5f;
-        val trianglePath4 = Path().apply {
-            moveTo(0f, size.height * 3 / 12);
-            lineTo(triWidth4 / 2, size.height / 2f);
-            lineTo(0f, size.height * 9 / 12);
+        val inner_triangle_path_bottom = Path().apply {
+            moveTo(20f, size.height / 4 + 40);
+            lineTo(size.width / 2 - 60, size.height - 20);
+            lineTo(20f, size.height - 20);
             close();
         }
-        drawPath(trianglePath4, black)
+        drawPath(inner_triangle_path_bottom, red)
+
+        drawCircle(white, 64f, Offset(size.width / 8, size.height * 4 / 12))
+        drawCircle(white, 64f, Offset(size.width / 8, size.height * 9 / 12))
     }
 }
 

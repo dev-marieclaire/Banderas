@@ -9,8 +9,10 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.GenericShape
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -29,35 +31,6 @@ import com.example.banderas.R
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
-
-fun starPath(
-    posX: Float,
-    posY: Float,
-    radius: Float,
-    rotation: Float = 0f
-): Path {
-    val path = Path()
-
-    val points = 5
-    val stepDeg = 360f / (points * 2)   // 36°
-    val innerRadius = radius / 2.5f     // tweak this ratio to taste
-
-    for (i in 0 until points * 2) {     // 10 vertices
-        val angleDeg = rotation - 90 + i * stepDeg
-        val angleRad = angleDeg * (PI / 180.0)
-
-        val r = if (i % 2 == 0) radius else innerRadius
-
-        val x = posX + r * cos(angleRad).toFloat()
-        val y = posY + r * sin(angleRad).toFloat()
-
-        if (i == 0) path.moveTo(x, y)
-        else path.lineTo(x, y)
-    }
-
-    path.close()
-    return path
-}
 
 val StarShape = GenericShape { size, _ ->
     val cx = size.width / 2f
@@ -80,31 +53,44 @@ val StarShape = GenericShape { size, _ ->
 fun BanderaScreen(modifier: Modifier = Modifier)
 {
     val redTurkey = colorResource(R.color.RedTurkey);
+    val white = Color.White
 
-    Canvas(modifier = modifier.fillMaxSize())
+    ConstraintLayout(modifier = Modifier
+        .background(redTurkey)
+        .fillMaxSize()
+    )
     {
-        drawRect(color = redTurkey);
+        val (ref1, ref2) = createRefs()
+        ConstraintLayout(modifier = Modifier
+            .constrainAs(ref1,
+                {
+                    top.linkTo(parent.top)
+                    bottom.linkTo(parent.bottom)
 
-        val cy = size.height / 2f
-        val rOut = size.height * 0.30f
-        drawCircle(
-            color = Color.White, radius = rOut,
-            center = Offset(size.width * 0.38f, cy)
-        )
+                    start.linkTo(parent.start, 100.dp)
+                })
+            .size(360.dp)
+            .clip(CircleShape)
+            .background(white)
+        ) {}
 
-        drawCircle(
-            color = Color(0xFFE30A17), radius = size.height * 0.24f,
-            center = Offset(size.width * 0.38f + size.height * 0.09f, cy)
-        )
+        ConstraintLayout(modifier = Modifier
+            .constrainAs(ref2,
+                {
+                    top.linkTo(ref1.top)
+                    bottom.linkTo(ref1.bottom)
 
-        val star = starPath(size.width * 5 / 8f, size.height / 2f, 96f);
-        drawPath(star, color = Color.White);
+                    end.linkTo(ref1.end)
+                })
+            .size(256.dp)
+            .clip(CircleShape)
+            .background(redTurkey)
+        ) {}
     }
 }
+
 @Preview(showBackground = true)
 @Composable
 fun BanderaScreenPreview() {
-    Surface {
-        BanderaScreen(modifier = Modifier.aspectRatio(4 / 3f))
-    }
+    BanderaScreen(modifier = Modifier.aspectRatio(3 / 4f))
 }

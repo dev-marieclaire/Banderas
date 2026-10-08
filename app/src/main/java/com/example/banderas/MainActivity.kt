@@ -39,77 +39,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             BanderasTheme {
                 Scaffold(modifier = Modifier.fillMaxSize())
-                { innerPadding -> BanderaEEUU(Modifier.padding(innerPadding)) }
+                { innerPadding -> BanderaScreen(Modifier.padding(innerPadding)) }
             }
         }
-    }
-}
-
-val StarShape = GenericShape { size, _ ->
-    val cx = size.width / 2f
-    val cy = size.height / 2f
-    val outerR = minOf(cx, cy)
-    val innerR = outerR * 0.4f
-    var angle = -PI / 2
-
-    moveTo(cx + outerR * cos(angle).toFloat(), cy + outerR * sin(angle).toFloat())
-
-    for (i in 1..10) {
-        angle += PI / 5
-        val r = if (i % 2 == 0) outerR else innerR
-        lineTo(cx + r * cos(angle).toFloat(), cy + r * sin(angle).toFloat())
-    }
-    close()
-}
-
-@Composable
-fun BanderaEEUU(modifier: Modifier = Modifier)
-{
-    Box(modifier = modifier.fillMaxSize())
-    {
-        Column(modifier = Modifier.fillMaxSize())
-        {
-            repeat(13)
-            {   index ->
-                Box(Modifier
-                    .weight(1f)
-                    .fillMaxWidth()
-                    .background(if (index % 2 == 0) Color(0xFFB22234) else Color.White)
-                )
-            }
-        }
-
-        Column(
-            modifier = Modifier
-                .fillMaxWidth(0.4f)
-//                .fillMaxHeight(0.54f)
-                .background(Color(0xFF3C3B6E)),
-            horizontalAlignment = Alignment.CenterHorizontally
-        )
-        {
-            repeat(9)
-            {   index ->
-                Row(Modifier.fillMaxWidth().padding(5.dp), horizontalArrangement = Arrangement.Center)
-                {
-                    repeat(if (index % 2 == 0) 6 else 5)
-                    {
-                        Box(
-                            modifier = Modifier
-                                .size(25.dp)
-                                .clip(StarShape)
-                                .background(Color(0xFFFFFFFF))
-                        )
-                    }
-                }
-            }
-        }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun BanderaEEUUPreview() {
-    Surface {
-        BanderaEEUU(modifier = Modifier.fillMaxSize())
     }
 }

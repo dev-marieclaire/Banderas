@@ -2,9 +2,15 @@ package com.example.banderas.Screens
 
 import android.graphics.Point
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
@@ -14,6 +20,8 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import com.example.banderas.R
 import kotlin.io.path.Path
 import kotlin.math.PI
@@ -50,26 +58,35 @@ fun starPath(
 }
 
 @Composable
-fun BanderaScreen(modifier: Modifier = Modifier)
-{
-    val blueCuba = colorResource(R.color.BlueCuba);
-    val redCuba = colorResource(R.color.RedCuba);
+fun BanderaScreen(modifier: Modifier = Modifier) {
+    val blueCuba = colorResource(R.color.BlueCuba)
+    val redCuba = colorResource(R.color.RedCuba)
+
+    BoxWithConstraints(modifier = modifier.fillMaxSize()) {
+        val stripeHeight = maxHeight / 5
+
+        ConstraintLayout(modifier = Modifier.fillMaxSize()) {
+            val refs = List(5) { createRef() }
+
+            refs.forEachIndexed { i, ref ->
+                Box(
+                    modifier = Modifier
+                        .height(stripeHeight)
+                        .background(if (i % 2 == 0) blueCuba else Color.White)
+                        .constrainAs(ref) {
+                            top.linkTo(if (i == 0) parent.top else refs[i - 1].bottom)
+                            start.linkTo(parent.start)
+                            end.linkTo(parent.end)
+
+                            width = Dimension.fillToConstraints
+                        }
+                )
+            }
+        }
+    }
 
     Canvas(modifier = modifier.fillMaxSize())
     {
-        val stripe = size.height / 5f;
-
-        for (i in 0 until 5)
-        {
-            if (i % 2 == 0)
-                drawRect(
-                    color = blueCuba,
-                    topLeft = Offset(0f, i * stripe),
-                    size = Size(size.width, stripe)
-                )
-
-        }
-
         val triWidth = size.width * 0.38f;
         val trianglePath = Path().apply {
             moveTo(0f, 0f);

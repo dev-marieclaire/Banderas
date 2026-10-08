@@ -1,10 +1,12 @@
 package com.example.banderas.Screens
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
@@ -12,6 +14,9 @@ import androidx.compose.ui.graphics.PaintingStyle.Companion.Stroke
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import kotlin.io.path.Path
 import kotlin.math.cos
 import kotlin.math.sin
@@ -35,16 +40,40 @@ fun trianglePath(cx: Float, cy: Float, r: Float, rotationDeg: Float): Path
 fun BanderaScreen(modifier: Modifier = Modifier)
 {
     val blueColor = Color.Blue;
+
+    ConstraintLayout(modifier = modifier)
+    {
+        val (ref1, ref2) = createRefs()
+
+        ConstraintLayout(modifier = Modifier
+            .constrainAs(ref1, {
+                top.linkTo(parent.top)
+
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+
+                width = Dimension.fillToConstraints
+                height = Dimension.value(96.dp)
+            })
+            .background(blueColor)
+        ) { }
+
+        ConstraintLayout(modifier = Modifier
+            .constrainAs(ref2, {
+                bottom.linkTo(parent.bottom)
+
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+
+                width = Dimension.fillToConstraints
+                height = Dimension.value(96.dp)
+            })
+            .background(blueColor)
+        ) { }
+    }
+
     Canvas(modifier = modifier.fillMaxSize())
     {
-        drawRect(color = blueColor, size = Size(size.width, size.height / 8f));
-
-        drawRect(
-            color = blueColor,
-            size = Size(size.width, size.height / 8f),
-            topLeft = Offset(0f, size.height - (size.height / 8f))
-        );
-
         drawPath(
             trianglePath(size.width / 2f, size.height / 2f,
                 360f,

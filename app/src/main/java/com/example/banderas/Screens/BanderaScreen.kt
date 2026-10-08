@@ -3,6 +3,7 @@ package com.example.banderas.Screens
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.shape.GenericShape
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -13,6 +14,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import kotlin.math.PI
 import kotlin.math.atan2
 import kotlin.math.cos
@@ -41,6 +44,24 @@ fun starPath(
     path.close()
     return path
 }
+
+val StarShape = GenericShape { size, _ ->
+    val cx = size.width / 2f
+    val cy = size.height / 2f
+    val outerR = minOf(cx, cy)
+    val innerR = outerR * 0.4f
+    var angle = -PI / 2
+
+    moveTo(cx + outerR * cos(angle).toFloat(), cy + outerR * sin(angle).toFloat())
+
+    for (i in 1..10) {
+        angle += PI / 5
+        val r = if (i % 2 == 0) outerR else innerR
+        lineTo(cx + r * cos(angle).toFloat(), cy + r * sin(angle).toFloat())
+    }
+    close()
+}
+
 @Composable
 fun BanderaScreen(modifier: Modifier = Modifier) {
     val negro    = Color.Black

@@ -3,6 +3,9 @@ package com.example.banderas.Screens
 import android.R.attr.height
 import android.R.attr.width
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -10,7 +13,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
@@ -22,6 +27,8 @@ import androidx.compose.ui.graphics.drawscope.withTransform
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import com.example.banderas.R
 import java.nio.file.Files.size
 import kotlin.math.PI
@@ -30,112 +37,136 @@ import kotlin.math.cos
 import kotlin.math.hypot
 import kotlin.math.sin
 
-fun starPath(
-    posX: Float,
-    posY: Float,
-    radius: Float,
-    rotation: Float = 0f,
-    points: Int = 5,
-    innerRatio: Float = 0.382f
-): Path {
-    val path = Path()
-    val stepDeg = 360f / (points * 2)
-
-    for (i in 0 until points * 2) {
-        val angleDeg = rotation - 90f + i * stepDeg
-        val angleRad = angleDeg * (PI / 180.0)
-        val r = if (i % 2 == 0) radius else radius * innerRatio
-        val x = posX + r * cos(angleRad).toFloat()
-        val y = posY + r * sin(angleRad).toFloat()
-        if (i == 0) path.moveTo(x, y) else path.lineTo(x, y)
-    }
-    path.close()
-    return path
-}
 @Composable
 fun BanderaScreen(modifier: Modifier = Modifier.fillMaxSize()) {
     val rojo     = colorResource(R.color.RedUK)
     val blanco   = Color.White
     val azul = colorResource(R.color.BlueUK)
 
-    val w = width
-    val h = height
+    BoxWithConstraints(modifier = modifier.fillMaxSize()) {
+        val w = maxWidth.value
+        val h = maxHeight.value
+        val diagonal = hypot(w, h).dp
+        val angle = -(atan2(h, w) * 180.0 / PI).toFloat()
 
-    // Top right corner
-    Canvas(modifier = modifier)
-    {
-        val w = size.width / 2f;
-        val h = size.height / 2f;
-
-        drawRect(azul)
-
-        fun drawQuadrant(x: Float, y: Float, mirror_x: Boolean, mirror_y: Boolean)
+        ConstraintLayout(modifier = modifier.fillMaxSize().background(azul))
         {
-            val angle = Math.toDegrees(
-                atan2(size.height.toDouble(), size.width.toDouble())
-            ).toFloat()
+            val vertical_guideline = createGuidelineFromStart(0.5f);
+            val horitonzal_guideline = createGuidelineFromTop(0.5f);
 
-            val hy = hypot(size.width, size.height)
+            val items = remember { List(9) { "Item $it" } }
+            val refs = items.map { createRef() }
 
-            val effective_angle = if (mirror_x) -angle else angle
-            withTransform({
-                translate(
-                    left = if (mirror_x) size.width else 0f,
-                    top = y
-                )
-                if (mirror_x) scale(scaleX = -1f, scaleY = 1f, pivot = Offset.Zero)
-            })
-            {
-                val localCenter = Offset(w / 2f, h / 2f)
-                rotate(degrees = if (mirror_y) -angle else angle, pivot = localCenter)
-                {
-                    drawRect(
-                        blanco,
-                        Offset(-w, h / 2f - 60f),
-                        Size(w * 1.95f, 120f)
-                    )
+            Box(
+                modifier = Modifier
+                .width(80.dp)
+                .background(blanco)
+                .constrainAs(refs[0], {
+                    top.linkTo(parent.top)
+                    bottom.linkTo(parent.bottom)
+
+                    start.linkTo(vertical_guideline, (-40).dp)
+                    height = Dimension.fillToConstraints
                 }
-                rotate(degrees = if (mirror_y) -angle else angle, pivot = localCenter)
-                {
-                    drawRect(
-                        rojo,
-                        Offset(-w, if (mirror_x) h / 2f - 30f else h / 2f - 10f),
-                        Size(w * 1.95f, 40f)
-                    )
+            )) {}
+
+            Box(modifier = Modifier
+                .rotate(angle)
+                .background(blanco)
+                .constrainAs(refs[4], {
+                    top.linkTo(parent.top)
+                    bottom.linkTo(parent.bottom)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+
+                    width  = Dimension.value(diagonal)
+                    height = Dimension.value(80.dp)
+                })
+            ) {}
+
+            Box(modifier = Modifier
+                .rotate(angle)
+                .background(rojo)
+                .constrainAs(refs[5], {
+                    top.linkTo(parent.top)
+                    bottom.linkTo(parent.bottom)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+
+                    width  = Dimension.value(diagonal)
+                    height = Dimension.value(40.dp)
+                })
+            ) {}
+
+            Box(modifier = Modifier
+                .rotate(-angle)
+                .background(blanco)
+                .constrainAs(refs[6], {
+                    top.linkTo(parent.top)
+                    bottom.linkTo(parent.bottom)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+
+                    width  = Dimension.value(diagonal)
+                    height = Dimension.value(80.dp)
+                })
+            ) {}
+
+            Box(modifier = Modifier
+                .rotate(-angle)
+                .background(rojo)
+                .constrainAs(refs[7], {
+                    top.linkTo(parent.top)
+                    bottom.linkTo(parent.bottom)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+
+                    width  = Dimension.value(diagonal)
+                    height = Dimension.value(40.dp)
+                })
+            ) {}
+
+            Box(
+                modifier = Modifier
+                .width(40.dp)
+                .background(rojo)
+                .constrainAs(refs[1], {
+                    top.linkTo(parent.top)
+                    bottom.linkTo(parent.bottom)
+
+                    start.linkTo(vertical_guideline, (-20).dp)
+                    height = Dimension.fillToConstraints
                 }
-            }
+            )) {}
 
-            // Línea vertical
-            drawRect(
-                blanco,
-                topLeft = Offset(if (mirror_x) x else x + w * 5f / 6f, y),
-                size = Size(w / 6f, h)
-            )
+            Box(
+                modifier = Modifier
+                .height(80.dp)
+                .background(blanco)
+                .constrainAs(refs[2], {
+                    top.linkTo(horitonzal_guideline, (-40).dp)
 
-            drawRect(
-                rojo,
-                topLeft = Offset(if (mirror_x) x else x + w * 11f / 12f, y),
-                size = Size(w / 12f, h)
-            )
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
 
-            // Línea horizontal
-            drawRect(
-                blanco,
-                topLeft = Offset(x, if (mirror_y) y else y + h * 5f / 6f),
-                size = Size(w, h / 6f)
-            )
+                    width = Dimension.fillToConstraints
+                }
+            )) {}
 
-            drawRect(
-                rojo,
-                topLeft = Offset(x, if (mirror_y) y else y + h * 11f / 12f),
-                size = Size(w, h / 12f)
-            )
+            Box(
+                modifier = Modifier
+                .height(40.dp)
+                .background(rojo)
+                .constrainAs(refs[3], {
+                    top.linkTo(horitonzal_guideline, (-20).dp)
+
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+
+                    width = Dimension.fillToConstraints
+                }
+            )) {}
         }
-
-        drawQuadrant(0f, 0f, false, false)
-        drawQuadrant(w, 0f, true, false)
-        drawQuadrant(0f, h, mirror_x = false, mirror_y = true)
-        drawQuadrant(w, h, mirror_x = true, mirror_y = true)
     }
 }
 

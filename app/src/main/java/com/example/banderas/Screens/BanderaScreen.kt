@@ -2,6 +2,7 @@ package com.example.banderas.Screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -15,8 +16,10 @@ import androidx.constraintlayout.compose.Dimension
 import com.example.banderas.R
 
 @Composable
-fun BanderaScreen(modifier: Modifier = Modifier) {
-    ConstraintLayout(modifier = modifier.fillMaxSize()) {
+fun BanderaScreen(modifier: Modifier = Modifier)
+{
+    ConstraintLayout(modifier = modifier.fillMaxSize())
+    {
         val blue  = createRef()
         val white = createRef()
         val red   = createRef()
@@ -24,35 +27,27 @@ fun BanderaScreen(modifier: Modifier = Modifier) {
         val leftGuide   = createGuidelineFromStart(1f / 3f)
         val rightGuide  = createGuidelineFromStart(2f / 3f)
 
-        val fill = Dimension.fillToConstraints
-
-        // shared vertical constraints, extended per stripe horizontally
-        fun ConstrainScope.fullHeight() {
-            top.linkTo(parent.top)
-            bottom.linkTo(parent.bottom)
-            height = fill
-        }
-
-        Box(Modifier.constrainAs(blue) {
-            fullHeight()
+        Box(Modifier.constrainAs(blue)
+        {
             start.linkTo(parent.start)
             end.linkTo(leftGuide)
-            width = fill
-        }.background(Color.Black))
 
-        Box(Modifier.constrainAs(white) {
-            fullHeight()
+            width = Dimension.fillToConstraints
+        }.background(Color.Black).fillMaxHeight())
+
+        Box(Modifier.constrainAs(white)
+        {
             start.linkTo(leftGuide)
             end.linkTo(rightGuide)
-            width = fill
-        }.background(colorResource(R.color.RedGermany)))
+            width = Dimension.fillToConstraints
+        }.background(colorResource(R.color.RedGermany)).fillMaxHeight())
 
-        Box(Modifier.constrainAs(red) {
-            fullHeight()
+        Box(Modifier.constrainAs(red)
+        {
             start.linkTo(rightGuide)
             end.linkTo(parent.end)
-            width = fill
-        }.background(colorResource(R.color.YellowGermany)))
+            width = Dimension.fillToConstraints
+        }.background(colorResource(R.color.YellowGermany)).fillMaxHeight())
     }
 }
 

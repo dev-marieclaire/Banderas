@@ -30,6 +30,7 @@ fun BanderaScreen(modifier: Modifier = Modifier)
         val guideline1 = createGuidelineFromTop(1/3f);
         val guideline2 = createGuidelineFromBottom(1/3f);
         Box(modifier = Modifier
+            .background(colorResource(R.color.BlueArg))
             .constrainAs(c1)
             {
                 top.linkTo(parent.top)
@@ -55,12 +56,23 @@ fun BanderaScreen(modifier: Modifier = Modifier)
                 height = Dimension.fillToConstraints
             })
         {
+            val ref = createRef()
             Box(modifier = Modifier
-                .size(50.dp)
+                .size(128.dp)
                 .clip(CircleShape)
-                .background(colorResource(R.color.GoldArg)))
+                .background(colorResource(R.color.GoldArg))
+                .constrainAs(ref)
+                {
+                    top.linkTo(parent.top)
+                    bottom.linkTo(parent.bottom)
+
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                }
+            )
         }
         Box(modifier = Modifier
+            .background(colorResource(R.color.BlueArg))
             .constrainAs(c3)
             {
                 top.linkTo(guideline2)

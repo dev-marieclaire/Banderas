@@ -3,14 +3,18 @@ package com.example.banderas.Screens
 import android.R.attr.height
 import android.R.attr.width
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
@@ -22,6 +26,8 @@ import androidx.compose.ui.graphics.drawscope.withTransform
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.banderas.R
 import java.nio.file.Files.size
 import kotlin.math.PI
@@ -71,9 +77,36 @@ fun BanderaScreen(modifier: Modifier = Modifier.fillMaxSize()) {
             close();
         }
         drawPath(inner_triangle_path_bottom, red)
+    }
 
-        drawCircle(white, 64f, Offset(size.width / 8, size.height * 4 / 12))
-        drawCircle(white, 64f, Offset(size.width / 8, size.height * 9 / 12))
+    ConstraintLayout(modifier = modifier)
+    {
+        val (ref1, ref2) = createRefs();
+        ConstraintLayout(modifier = Modifier
+            .clip(CircleShape)
+            .size(60.dp)
+            .background(white)
+            .constrainAs(ref1)
+            {
+                top.linkTo(parent.top, 60.dp)
+                start.linkTo(parent.start, 20.dp)
+            }
+        ) { }
+    }
+
+    ConstraintLayout(modifier = modifier)
+    {
+        val (ref1, ref2) = createRefs();
+        ConstraintLayout(modifier = Modifier
+            .clip(CircleShape)
+            .size(60.dp)
+            .background(white)
+            .constrainAs(ref1)
+            {
+                bottom.linkTo(parent.bottom, 40.dp)
+                start.linkTo(parent.start, 20.dp)
+            }
+        ) { }
     }
 }
 

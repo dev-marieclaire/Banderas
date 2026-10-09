@@ -1,6 +1,5 @@
 package com.example.banderas.Screens
 
-import android.R.attr.end
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,34 +24,31 @@ fun BanderaFranciaCL(modifier: Modifier = Modifier) {
         val leftGuide   = createGuidelineFromStart(1f / 3f)
         val rightGuide  = createGuidelineFromStart(2f / 3f)
 
-        val fill = Dimension.fillToConstraints
-
-        // shared vertical constraints, extended per stripe horizontally
         fun ConstrainScope.fullHeight() {
             top.linkTo(parent.top)
             bottom.linkTo(parent.bottom)
-            height = fill
+            height = Dimension.fillToConstraints
         }
 
         Box(Modifier.constrainAs(blue) {
             fullHeight()
             start.linkTo(parent.start)
             end.linkTo(leftGuide)
-            width = fill
+            width = Dimension.fillToConstraints
         }.background(colorResource(R.color.BlueFrance)))
 
         Box(Modifier.constrainAs(white) {
             fullHeight()
             start.linkTo(leftGuide)
             end.linkTo(rightGuide)
-            width = fill
+            width = Dimension.fillToConstraints
         }.background(Color.White))
 
         Box(Modifier.constrainAs(red) {
             fullHeight()
             start.linkTo(rightGuide)
             end.linkTo(parent.end)
-            width = fill
+            width = Dimension.fillToConstraints
         }.background(colorResource(R.color.RedFrance)))
     }
 }

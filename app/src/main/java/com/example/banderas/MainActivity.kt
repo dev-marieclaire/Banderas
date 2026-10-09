@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.banderas.Screens.BanderaScreen
+import com.example.banderas.screens.BanderaScreen
 import com.example.banderas.ui.theme.BanderasTheme
 
 class MainActivity : ComponentActivity() {

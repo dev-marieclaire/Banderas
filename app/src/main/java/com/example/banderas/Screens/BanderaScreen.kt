@@ -16,8 +16,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
+import com.example.banderas.R
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
@@ -43,39 +47,59 @@ val StarShape = GenericShape { size, _ ->
 @Composable
 fun BanderaScreen(modifier: Modifier = Modifier)
 {
-    Box(modifier = modifier.fillMaxSize())
+    val rojo = colorResource(R.color.RedUS)
+    val azul = colorResource(R.color.BlueUS)
+
+    ConstraintLayout(modifier = modifier.fillMaxSize())
     {
-        Column(modifier = Modifier.fillMaxSize())
-        {
-            repeat(13)
-            {   index ->
-                Box(Modifier
-                    .weight(1f)
+        val stripes = List(13) { createRef() }
+        val canton  = createRef()
+
+        stripes.forEachIndexed { i, ref ->
+            Box(
+                modifier = Modifier
                     .fillMaxWidth()
-                    .background(if (index % 2 == 0) Color(0xFFB22234) else Color.White)
-                )
-            }
+                    .background(if (i % 2 == 0) rojo else Color.White)
+                    .constrainAs(ref)
+                    {
+                        top.linkTo(if (i == 0) parent.top else stripes[i - 1].bottom)
+                        bottom.linkTo(if (i == 12) parent.bottom else stripes[i + 1].top)
+                        height = Dimension.fillToConstraints
+                    }
+            )
         }
 
         Column(
             modifier = Modifier
-                .fillMaxWidth(0.4f)
-//                .fillMaxHeight(0.54f)
-                .background(Color(0xFF3C3B6E)),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .background(azul)
+                .constrainAs(canton)
+                {
+                    top.linkTo(parent.top)
+                    start.linkTo(parent.start)
+                    bottom.linkTo(stripes[6].bottom)
+                    width  = Dimension.percent(0.4f)
+                    height = Dimension.fillToConstraints
+                },
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.SpaceEvenly
         )
         {
             repeat(9)
-            {   index ->
-                Row(Modifier.fillMaxWidth().padding(5.dp), horizontalArrangement = Arrangement.Center)
+            { row ->
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 4.dp),
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                )
                 {
-                    repeat(if (index % 2 == 0) 6 else 5)
+                    repeat(if (row % 2 == 0) 6 else 5)
                     {
                         Box(
                             modifier = Modifier
                                 .size(25.dp)
                                 .clip(StarShape)
-                                .background(Color(0xFFFFFFFF))
+                                .background(Color.White)
                         )
                     }
                 }

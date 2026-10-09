@@ -2,11 +2,18 @@ package com.example.banderas.Screens
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.GenericShape
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
@@ -14,36 +21,33 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintLayout
+import java.util.Collections.rotate
 import kotlin.math.PI
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.hypot
 import kotlin.math.sin
 
-fun starPath(
-    posX: Float,
-    posY: Float,
-    radius: Float,
-    rotation: Float = 0f,
-    points: Int = 5,
-    innerRatio: Float = 0.382f
-): Path {
-    val path = Path()
-    val stepDeg = 360f / (points * 2)
+val StarShape = GenericShape { size, _ ->
+    val cx = size.width / 2f
+    val cy = size.height / 2f
+    val outerR = minOf(cx, cy)
+    val innerR = outerR * 0.4f
+    var angle = -PI / 2
 
-    for (i in 0 until points * 2) {
-        val angleDeg = rotation - 90f + i * stepDeg
-        val angleRad = angleDeg * (PI / 180.0)
-        val r = if (i % 2 == 0) radius else radius * innerRatio
-        val x = posX + r * cos(angleRad).toFloat()
-        val y = posY + r * sin(angleRad).toFloat()
-        if (i == 0) path.moveTo(x, y) else path.lineTo(x, y)
+    moveTo(cx + outerR * cos(angle).toFloat(), cy + outerR * sin(angle).toFloat())
+
+    for (i in 1..10) {
+        angle += PI / 5
+        val r = if (i % 2 == 0) outerR else innerR
+        lineTo(cx + r * cos(angle).toFloat(), cy + r * sin(angle).toFloat())
     }
-    path.close()
-    return path
+    close()
 }
+
 @Composable
 fun BanderaScreen(modifier: Modifier = Modifier) {
     val negro    = Color.Black
@@ -51,7 +55,7 @@ fun BanderaScreen(modifier: Modifier = Modifier) {
     val blanco   = Color.White
     val amarillo = Color(0xFFFCD116)
 
-    ConstraintLayout(modifier = modifier.fillMaxSize().background(rojo))
+    Box(modifier = modifier.fillMaxSize().background(rojo))
     {
         Canvas(modifier = modifier.fillMaxSize()) {
             val w = size.width
@@ -65,10 +69,66 @@ fun BanderaScreen(modifier: Modifier = Modifier) {
             drawPath(path, negro)
         }
 
+        Box(modifier = modifier.fillMaxSize())
+        {
+            Box(modifier = Modifier
+                .offset(60.dp, 90.dp)
+                .size(50.dp)
+                .clip(StarShape)
+                .background(blanco)
+            )
+        }
 
+        Box(modifier = modifier.fillMaxSize())
+        {
+            Box(modifier = Modifier
+                .offset(20.dp, 144.dp)
+                .size(50.dp)
+                .clip(StarShape)
+                .background(blanco)
+            )
+        }
+
+        Box(modifier = modifier.fillMaxSize())
+        {
+            Box(modifier = Modifier
+                .offset(100.dp, 144.dp)
+                .size(50.dp)
+                .clip(StarShape)
+                .background(blanco)
+            )
+        }
+
+        Box(modifier = modifier.fillMaxSize())
+        {
+            Box(modifier = Modifier
+                .offset(60.dp, 220.dp)
+                .size(50.dp)
+                .clip(StarShape)
+                .background(blanco)
+            )
+        }
+
+        Box(modifier = modifier.fillMaxSize())
+        {
+            Box(modifier = Modifier
+                .offset(90.dp, 192.dp)
+                .size(25.dp)
+                .clip(StarShape)
+                .background(blanco)
+            )
+        }
+
+        Box(modifier = modifier.fillMaxSize())
+        {
+            Box(modifier = Modifier
+                .offset(256.dp, 40.dp)
+                .size(96.dp)
+                .clip(StarShape)
+                .background(amarillo)
+            )
+        }
     }
-
-
 }
 
 @Preview(showBackground = true)

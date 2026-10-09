@@ -2,6 +2,7 @@ package com.example.banderas.Screens
 
 import android.graphics.Point
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -16,6 +17,8 @@ import androidx.compose.ui.graphics.drawscope.clipRect
 import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import com.example.banderas.R
 import kotlin.io.path.Path
 import kotlin.math.PI
@@ -31,30 +34,48 @@ fun BanderaScreen(modifier: Modifier = Modifier) {
     val blanco   = Color.White
     val verde    = Color(0xFF007A33)
 
-    Canvas(modifier = modifier.fillMaxSize()) {
-        val W = size.width
-        val H = size.height
-        val origin = Offset(0f, H)
-        val radius = hypot(W, H) * 2f
+    ConstraintLayout(modifier = modifier.fillMaxSize()) {
+        val flag = createRef()
 
-        val colors = listOf(azul, amarillo, rojo, blanco, verde)
-        val angles = listOf(90f, 72f, 54f, 36f, 18f, 0f)
-
-        clipRect {
-            colors.forEachIndexed{ i, color ->
-                val a1 = angles[i]     * PI.toFloat() / 180f
-                val a2 = angles[i + 1] * PI.toFloat() / 180f
-
-                val p1 = Offset(origin.x + radius * cos(a1), origin.y - radius * sin(a1))
-                val p2 = Offset(origin.x + radius * cos(a2), origin.y - radius * sin(a2))
-
-                val path = Path().apply {
-                    moveTo(origin.x, origin.y)
-                    lineTo(p1.x, p1.y)
-                    lineTo(p2.x, p2.y)
-                    close()
+        Canvas(
+            modifier = Modifier
+                .background(blanco)
+                .constrainAs(flag) {
+                    top.linkTo(parent.top)
+                    bottom.linkTo(parent.bottom)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                    width  = Dimension.fillToConstraints
+                    height = Dimension.fillToConstraints
                 }
-                drawPath(path, color)
+        ) {
+            val w = size.width
+            val h = size.height
+            val origin = Offset(0f, h)
+            val radius = hypot(w, h) * 2f
+
+            val colors = listOf(azul, amarillo, rojo, blanco, verde)
+            val angles = listOf(90f, 72f, 54f, 36f, 18f, 0f)
+            val d2r = PI.toFloat() / 180f
+
+            clipRect {
+                colors.forEachIndexed { i, color ->
+                    val a1 = angles[i]     * d2r
+                    val a2 = angles[i + 1] * d2r
+
+                    val p1 = Offset(origin.x + radius * cos(a1), origin.y - radius * sin(a1))
+                    val p2 = Offset(origin.x + radius * cos(a2), origin.y - radius * sin(a2))
+
+                    drawPath(
+                        Path().apply {
+                            moveTo(origin.x, origin.y)
+                            lineTo(p1.x, p1.y)
+                            lineTo(p2.x, p2.y)
+                            close()
+                        },
+                        color
+                    )
+                }
             }
         }
     }

@@ -1,6 +1,6 @@
 package com.example.banderas
 
-import BanderaScreen
+import com.example.banderas.Screens.BanderaScreen
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent

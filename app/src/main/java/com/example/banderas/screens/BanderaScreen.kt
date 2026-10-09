@@ -16,8 +16,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.banderas.R
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
@@ -51,7 +53,7 @@ fun BanderaScreen(modifier: Modifier = Modifier)
                 Box(Modifier
                     .weight(1f)
                     .fillMaxWidth()
-                    .background(if (index % 2 == 0) Color(0xFFB22234) else Color.White)
+                    .background(if (index % 2 == 0) colorResource(R.color.RedUS) else Color.White)
                 )
             }
         }
@@ -60,7 +62,7 @@ fun BanderaScreen(modifier: Modifier = Modifier)
             modifier = Modifier
                 .fillMaxWidth(0.4f)
 //                .fillMaxHeight(0.54f)
-                .background(Color(0xFF3C3B6E)),
+                .background(colorResource(R.color.BlueUS)),
             horizontalAlignment = Alignment.CenterHorizontally
         )
         {
@@ -74,7 +76,7 @@ fun BanderaScreen(modifier: Modifier = Modifier)
                             modifier = Modifier
                                 .size(25.dp)
                                 .clip(StarShape)
-                                .background(Color(0xFFFFFFFF))
+                                .background(Color.White)
                         )
                     }
                 }

@@ -1,16 +1,14 @@
 package com.example.banderas
 
+import android.R.attr.end
+import android.R.attr.top
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -18,13 +16,13 @@ import androidx.compose.foundation.shape.GenericShape
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.focus.FocusRequester.Companion.createRefs
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.banderas.screens.BanderaScreen
 import com.example.banderas.ui.theme.BanderasTheme
 
 class MainActivity : ComponentActivity() {
@@ -34,45 +32,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             BanderasTheme {
                 Scaffold(modifier = Modifier.fillMaxSize())
-                { innerPadding -> BanderaBrasil(Modifier.padding(innerPadding)) }
+                { innerPadding -> BanderaScreen(Modifier.padding(innerPadding)) }
             }
         }
-    }
-}
-
-val RomboShape = GenericShape { size, _ ->
-    moveTo(size.width / 2f, 0f)
-    lineTo(size.width, size.height / 2f)
-    lineTo(size.width / 2f, size.height)
-    lineTo(0f, size.height / 2f)
-    close()
-}
-
-@Composable
-fun BanderaBrasil(modifier: Modifier = Modifier)
-{
-    Box(modifier = modifier.fillMaxSize().background(colorResource(R.color.GreenBrazil)),
-        contentAlignment = Alignment.Center)
-    {
-        Box(modifier = Modifier
-            .fillMaxSize()
-            .clip(RomboShape)
-            .background(colorResource(R.color.YellowBrazil))
-        )
-        Box(
-            modifier = Modifier
-                .align(Alignment.Center)
-                .size(90.dp)
-                .clip(CircleShape)
-                .background(colorResource(R.color.BlueBrazil))
-        )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun BanderaBrasilPreview() {
-    Surface {
-        BanderaBrasil(modifier = Modifier.fillMaxSize())
     }
 }

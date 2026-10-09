@@ -38,32 +38,3 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
-@Composable
-fun BanderaArgentina(modifier: Modifier = Modifier)
-{
-    Box(modifier = modifier.fillMaxSize())
-    {
-        Column(Modifier.fillMaxSize())
-        {
-            Box(Modifier.weight(1f).fillMaxWidth().background(colorResource(R.color.BlueArg)))
-            Box(Modifier.weight(1f).fillMaxWidth().background(Color.White))
-            Box(Modifier.weight(1f).fillMaxWidth().background(colorResource(R.color.BlueArg)))
-        }
-        Box(
-            modifier = Modifier
-                .align(Alignment.Center)
-                .size(50.dp)
-                .clip(CircleShape)
-                .background(colorResource(R.color.GoldArg))
-        )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun BanderaArgentinaPreview() {
-    Surface {
-        BanderaArgentina(modifier = Modifier.fillMaxSize())
-    }
-}
